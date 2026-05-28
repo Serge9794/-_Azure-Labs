@@ -281,3 +281,35 @@ Ce projet valide la maîtrise du **cycle DevOps complet** :
 | 5️⃣ Validation | API accessible mondialement et fonctionnelle ✅ |
 
 > 🎓 **Compétences prouvées :** Docker · Dockerfile · WSL 2 · Azure Portal · ACR · ACI · Architecture microservices · CI/CD · Déploiement cloud sans infrastructure serveur.
+--------------------------------------------------------------------------------------------------------------------------------------
+🚧**Difficultés Rencontrées et Solutions Apportées**
+Ce projet, bien que structuré et documenté, n'a pas été exempt d'obstacles techniques. Voici les deux principales difficultés rencontrées et la manière dont elles ont été surmontées.
+
+⚠️ **Difficulté 1 — Échec du dotnet restore : erreur SSL lors du docker build**
+**Symptôme** : Lors du premier docker build -t reservationsystem ., le build échouait à l'étape 8 du Dockerfile — précisément à l'instruction RUN dotnet restore. Le terminal affichait une cascade d'erreurs SSL :
+**error** : Failed to retrieve information about 'Microsoft.AspNetCore...' 
+The SSL connection could not be established.
+Authentication failed because the remote party has closed the transport stream.
+**ERROR**: failed to build: failed to solve: process "/bin/sh -c dotnet restore..." 
+did not complete successfully: exit code: 1
+
+<img width="956" height="284" alt="Capture d’écran 2026-05-28 105324" src="https://github.com/user-attachments/assets/a5ce2419-ed5d-416d-89bc-e36ab5f8ec5a" />
+
+
+**Cause identifiée** : L'image de base mcr.microsoft.com/dotnet/core/sdk:2.2 est très ancienne (fin de vie en 2019). Lors de l'exécution du dotnet restore à l'intérieur du conteneur, celui-ci tentait de contacter api.nuget.org via HTTPS, mais les certificats TLS embarqués dans cette vieille image étaient expirés ou incompatibles avec les autorités de certification actuelles — provoquant l'échec de la connexion sécurisée.
+Solution adoptée : La résolution est passée par la configuration DNS de Docker Desktop. En ajoutant les serveurs DNS publics de Google (8.8.8.8 et 8.8.8.4) dans les paramètres du moteur Docker (Docker Engine > fichier de configuration JSON), la résolution de nom et la connectivité réseau du daemon Docker ont été stabilisées, permettant au build de s'exécuter correctement en exploitant le cache de couches déjà résolu.
+
+<img width="954" height="509" alt="Capture d’écran 2026-05-28 111652" src="https://github.com/user-attachments/assets/75c1ea88-d8b5-41c1-8298-b46c4cb3d9d3" />
+
+
+json{
+  "dns": ["8.8.8.8", "8.8.8.4"]
+}
+Après application de cette configuration et redémarrage du daemon Docker, le docker build s'est déroulé sans erreur, les 15 étapes (layers) s'exécutant jusqu'au FINISHED.
+
+💡 **Leçon retenue**
+ProblèmeCause racineSolutiondotnet restore — SSL failureImage SDK .NET 2.2 obsolète + DNS Docker instableConfiguration des DNS publics Google dans Docker EngineBuild bloqué à l'étape RUNConnectivité réseau du daemon Docker insuffisanteRedémarrage du daemon après mise à jour de la config JSON
+
+Bonne pratique à retenir : Lorsqu'un docker build échoue sur une commande réseau (restore, apt-get, npm install…), la première piste à investiguer est la configuration DNS du daemon Docker — avant même de remettre en cause le Dockerfile lui-même. Un simple ajout de 8.8.8.8 dans daemon.json peut débloquer la situation en quelques secondes.
+
+
