@@ -1,4 +1,4 @@
-# 🔐 SÉCURISATION DU COMPTE DE STOCKAGE AZURE — Portfolio Projet AZ-104
+# 🔐 SÉCURISATION DU COMPTE DE STOCKAGE AZURE — Projet AZ-104
 
 > **Auteur :** Serge TOGNON | Admin Cloud Azure Certifié | [LinkedIn](https://www.linkedin.com/in/serge-tognon)
 
