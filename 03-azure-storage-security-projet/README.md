@@ -1,4 +1,4 @@
-# 🔐 SÉCURISATION DU COMPTE DE STOCKAGE AZURE — Projet AZ-104
+# 🔐 SÉCURISATION DU COMPTE DE STOCKAGE AZURE-Projet AZ-104
 
 > **Auteur :** Serge TOGNON | Admin Cloud Azure Certifié | [LinkedIn](https://www.linkedin.com/in/serge-tognon)
 
@@ -43,7 +43,7 @@ Ce projet démontre la mise en place d'une stratégie de sécurisation complète
 >
 > **Problématique :** FinSecure SA stocke des relevés clients, des rapports réglementaires et des données contractuelles dans Azure Blob Storage. Suite à un audit de conformité, la DSI exige une mise en conformité totale avec les standards de sécurité cloud (ISO 27001, RGPD) avant la fin du trimestre.
 >
-> **Mission :** En tant qu'Administrateur Cloud Azure (Serge TOGNON), sécuriser le compte de stockage Azure en mettant en place un réseau virtuel dédié, des contrôles d'accès stricts, un chiffrement bout-en-bout, une surveillance active et un audit complet.
+> **Mission :** En tant qu'Administrateur Cloud Azure , sécuriser le compte de stockage Azure en mettant en place un réseau virtuel dédié, des contrôles d'accès stricts, un chiffrement bout-en-bout, une surveillance active et un audit complet.
 
 ### 💼 Cas d'usage réels
 
@@ -100,7 +100,7 @@ Ce projet démontre la mise en place d'une stratégie de sécurisation complète
                                     │  │   rg-storage-security             │  │
   ACCÈS BLOQUÉ                      │  │                                   │  │
   ┌─────────────────┐  ── ✗ ───────▶│  │  ┌─────────────────────────────┐ │  │
-  │  ❌ IP inconnue │  Pare-feu IP   │  │  │  Virtual Network (NOUVEAU)  │ │  │
+  │  ❌ IP inconnue │  Pare-feu IP   │  │  │  Virtual Network             │ │  │
   │  Non autorisée  │  Storage       │  │  │  vnet-finsecure-storage      │ │  │
   └─────────────────┘                │  │  │  Espace : 10.10.0.0/16      │ │  │
                                     │  │  │                             │ │  │
@@ -241,14 +241,8 @@ Remplir le formulaire avec les valeurs suivantes :
 > ⚠️ **Contrainte de nommage :** Le nom du compte doit être **unique globalement** dans Azure, contenir entre 3 et 24 caractères, uniquement des **minuscules et des chiffres** — aucun trait d'union, aucune majuscule.
 
 ---
-
-> 📸 **Capture 1a** — `screenshots/01a_creation_formulaire_base.png`
->
-> **Chemin portail :** Portail Azure > Comptes de stockage > Créer > **Onglet Informations de base**
->
-> **Ce qu'il faut montrer :** Formulaire entièrement rempli — groupe de ressources `rg-storage-security`, nom du compte, région West Europe, performances Standard, redondance LRS.
->
-> **Éléments obligatoires :** Nom du compte visible, LRS sélectionné, groupe de ressources créé affiché.
+<img width="960" height="417" alt="A1" src="https://github.com/user-attachments/assets/2e1b78ad-9227-4331-8ccd-d7c2c9fe6a82" />
+<img width="920" height="404" alt="A2" src="https://github.com/user-attachments/assets/f3b6762f-63cf-41eb-b18c-e8f9cc02d633" />
 
 ---
 
@@ -267,14 +261,11 @@ Cliquer sur l'onglet **`Avancé`** et configurer :
 > 💡 **Pourquoi cette configuration ?** L'activation du transfert sécurisé et de TLS 1.2 garantit que toute communication avec le stockage est chiffrée. La désactivation de l'accès public aux blobs empêche toute exposition accidentelle de données financières de FinSecure SA.
 
 ---
+<img width="960" height="392" alt="B1" src="https://github.com/user-attachments/assets/8de8b324-e16b-45c1-8d2d-e7ee7b455afd" />
+<img width="949" height="386" alt="B2" src="https://github.com/user-attachments/assets/3c1bfda9-fca1-4954-8a06-bd7c5cc3d199" />
+<img width="920" height="374" alt="B3" src="https://github.com/user-attachments/assets/76a10c85-fcdd-4334-90b4-f9923641b6e7" />
+<img width="914" height="357" alt="C1" src="https://github.com/user-attachments/assets/63396c5e-c295-46ff-801e-0da4574c9972" />
 
-> 📸 **Capture 1b** — `screenshots/01b_onglet_avance_securite.png`
->
-> **Chemin portail :** Portail Azure > Créer un compte de stockage > **Onglet Avancé**
->
-> **Ce qu'il faut montrer :** "Transfert sécurisé requis" = Activé, TLS 1.2 sélectionné, Accès public aux blobs = Désactivé.
->
-> **Éléments obligatoires :** Les 3 paramètres de sécurité visibles simultanément.
 
 ---
 
@@ -296,14 +287,7 @@ Cliquer sur l'onglet **`Protection des données`** :
 5. Cliquer sur **`Accéder à la ressource`**
 
 ---
-
-> 📸 **Capture 1c** — `screenshots/01c_deploiement_reussi.png`
->
-> **Chemin portail :** Notification de déploiement — **"Votre déploiement est terminé"**
->
-> **Ce qu'il faut montrer :** Message de déploiement réussi avec le nom du compte de stockage créé.
->
-> **Éléments obligatoires :** Statut "Terminé", nom du compte visible.
+<img width="929" height="430" alt="D" src="https://github.com/user-attachments/assets/999f55d8-c17a-4501-9bc2-240ba1ff67f2" />
 
 ---
 
@@ -318,7 +302,7 @@ Cliquer sur l'onglet **`Protection des données`** :
 ### 💻 Commandes de référence — Azure CLI
 
 ```bash
-# Variables d'environnement (à adapter)
+# Variables d'environnement 
 export RESOURCE_GROUP="rg-storage-security"
 export LOCATION="westeurope"
 export STORAGE_ACCOUNT="stfinsecure1234"  # 
@@ -418,14 +402,10 @@ Créer un réseau virtuel Azure dédié pour isoler le trafic vers le compte de 
 7. Attendre la notification de déploiement réussi
 
 ---
+<img width="890" height="380" alt="D1" src="https://github.com/user-attachments/assets/919b73cf-cdcf-4067-8dc7-02993566e321" />
+<img width="905" height="318" alt="D2" src="https://github.com/user-attachments/assets/24385b03-d669-40b6-9b61-6d252ab22d38" />
 
-> 📸 **Capture 2a** — `screenshots/02a_vnet_creation_adresses_ip.png`
->
-> **Chemin portail :** Portail Azure > Réseaux virtuels > Créer > **Onglet Adresses IP**
->
-> **Ce qu'il faut montrer :** L'espace d'adressage `10.10.0.0/16` configuré et le sous-réseau `snet-storage-private` avec `10.10.1.0/24` visible dans la liste.
->
-> **Éléments obligatoires :** Nom du VNet, espace d'adressage, sous-réseau avec son nom et sa plage CIDR.
+<img width="908" height="344" alt="D3" src="https://github.com/user-attachments/assets/4d47230f-bc7d-4bd0-b8d1-3c00f76a0914" />
 
 ---
 
@@ -440,14 +420,7 @@ Le Service Endpoint permet au sous-réseau de communiquer directement avec le se
 5. Cliquer sur **`Enregistrer`**
 
 ---
-
-> 📸 **Capture 2b** — `screenshots/02b_service_endpoint_microsoft_storage.png`
->
-> **Chemin portail :** Portail Azure > vnet-finsecure-storage > Sous-réseaux > snet-storage-private > **Points de terminaison de service**
->
-> **Ce qu'il faut montrer :** `Microsoft.Storage` coché dans la liste des services, bouton Enregistrer visible.
->
-> **Éléments obligatoires :** Service Endpoint Microsoft.Storage activé sur le sous-réseau.
+<img width="902" height="410" alt="E1" src="https://github.com/user-attachments/assets/9229a656-27ae-4ba8-9019-a5004a5cc3fb" />
 
 ---
 
@@ -481,14 +454,9 @@ Maintenant que le VNet est prêt, configurer le compte de stockage pour n'accept
 12. Cliquer sur **`Enregistrer`** en haut de la page
 
 ---
-
-> 📸 **Capture 2c** — `screenshots/02c_pare_feu_vnet_ip_configure.png`
->
-> **Chemin portail :** Portail Azure > stfinsecure[xxxx] > Sécurité + réseau > **Réseau**
->
-> **Ce qu'il faut montrer :** Option "Réseaux sélectionnés" activée, le VNet `vnet-finsecure-storage` / `snet-storage-private` visible dans la section Réseaux virtuels, votre IP dans la section Pare-feu, exceptions cochées.
->
-> **Éléments obligatoires :** VNet dans la liste, IP dans le pare-feu, exceptions visibles, bouton Enregistrer visible.
+<img width="925" height="317" alt="F1" src="https://github.com/user-attachments/assets/bcadc6fc-0da9-4ad6-8d40-f42e2757a298" />
+<img width="872" height="386" alt="F2" src="https://github.com/user-attachments/assets/4ef32b04-7aa1-4976-a6d4-14226640f6a0" />
+<img width="894" height="410" alt="F3" src="https://github.com/user-attachments/assets/656431a7-3481-40d7-83d9-6af3e2406b1c" />
 
 ---
 
@@ -600,17 +568,6 @@ Configurer le contrôle d'accès basé sur les rôles (RBAC) pour remplacer l'au
 11. Cliquer sur **`Vérifier + attribuer`**
 12. Relire le résumé (rôle + membre + périmètre) et cliquer **`Vérifier + attribuer`** une seconde fois pour confirmer
 
----
-
-> 📸 **Capture 3a** — `screenshots/03a_attribution_role_blob_contributor.png`
->
-> **Chemin portail :** Portail Azure > stfinsecure1234 > Contrôle d'accès (IAM) > **Ajouter une attribution de rôle > Onglet Membres**
->
-> **Ce qu'il faut montrer :** Le rôle "Contributeur aux données Blob du stockage" sélectionné, le compte "Serge TOGNON" visible dans la liste des membres.
->
-> **Éléments obligatoires :** Nom du rôle visible, "Serge TOGNON" affiché comme membre sélectionné.
-
----
 
 #### 3.2 — Vérifier les attributions de rôles
 
@@ -620,13 +577,8 @@ Configurer le contrôle d'accès basé sur les rôles (RBAC) pour remplacer l'au
 
 ---
 
-> 📸 **Capture 3b** — `screenshots/03b_liste_attributions_roles.png`
->
-> **Chemin portail :** Portail Azure > stfinsecure[xxxx] > Contrôle d'accès (IAM) > **Onglet Attributions de rôles**
->
-> **Ce qu'il faut montrer :** Liste des attributions de rôles avec au minimum l'attribution de Serge TOGNON en tant que "Contributeur aux données Blob du stockage".
->
-> **Éléments obligatoires :** Colonne Nom avec "Serge TOGNON", colonne Rôle avec le bon rôle Storage, colonne Type visible.
+<img width="911" height="431" alt="G1" src="https://github.com/user-attachments/assets/252825c1-5429-4a38-8d6f-f1ad270b72ca" />
+
 
 ---
 
@@ -650,12 +602,8 @@ Configurer le contrôle d'accès basé sur les rôles (RBAC) pour remplacer l'au
    - **Rôle :** `Contributeur aux données Blob du stockage`
 
 ---
-
-> 📸 **Capture 3c** *(optionnelle)* — `screenshots/03c_identite_managee_creee.png`
->
-> **Chemin portail :** Portail Azure > Identités managées > **mi-finsecure-app > Vue d'ensemble**
->
-> **Ce qu'il faut montrer :** L'identité managée créée avec son Client ID et son Object ID visibles.
+<img width="905" height="306" alt="G2" src="https://github.com/user-attachments/assets/1bc63947-ed77-43bd-bb03-7b9cc3028134" />
+<img width="874" height="403" alt="G3" src="https://github.com/user-attachments/assets/832983f8-60ff-45ae-a99b-b583bd5476d0" />
 
 ---
 
@@ -720,7 +668,7 @@ az role assignment list --scope $STORAGE_ID --output table
 
 ### 🎯 Objectif
 
-Générer des SAS (Shared Access Signatures) permettant à des partenaires externes (auditeurs, régulateurs) d'accéder temporairement et de manière granulaire aux documents de FinSecure SA — sans partager les clés du compte ni créer des comptes Entra ID pour chaque partenaire.
+Générer des SAS (Shared Access Signatures) permettant à des partenaires externes (auditeurs, régulateurs) d'accéder temporairement et de manière granulaire aux documents de FinSecure SA  sans partager les clés du compte ni créer des comptes Entra ID pour chaque partenaire.
 
 **Lien AZ-104 :** Domaine *"Mettre en œuvre et gérer le stockage"*  SAS, politiques d'accès stockées, délégation d'accès.
 
@@ -753,13 +701,8 @@ Avant de générer un SAS, créer le conteneur de blobs cible.
 
 ---
 
-> 📸 **Capture 4a** — `screenshots/04a_conteneur_documents_cree.png`
->
-> **Chemin portail :** Portail Azure > stfinsecure[xxxx] > Stockage des données > **Conteneurs**
->
-> **Ce qu'il faut montrer :** Le conteneur `documents-finances` visible dans la liste avec l'accès "Privé".
->
-> **Éléments obligatoires :** Nom du conteneur, niveau d'accès "Privé" clairement visible.
+<img width="911" height="394" alt="H" src="https://github.com/user-attachments/assets/a34a38a0-d3f1-4b37-a85c-68c44e5a2a31" />
+
 
 ---
 
@@ -771,7 +714,7 @@ Avant de générer un SAS, créer le conteneur de blobs cible.
 | Section | Paramètre | Valeur |
 |---|---|---|
 | **Services autorisés** | Blob | ✅ Coché uniquement |
-| | File, File, Table | ❌ Décochés |
+| | File, File d'attente, Table | ❌ Décochés |
 | **Types de ressources autorisés** | Service | ❌ Décoché |
 | | Conteneur | ✅ Coché |
 | | Objet | ✅ Coché |
@@ -790,23 +733,8 @@ Avant de générer un SAS, créer le conteneur de blobs cible.
 
 ---
 
-> 📸 **Capture 4b** — `screenshots/04b_formulaire_sas_parametres.png`
->
-> **Chemin portail :** Portail Azure > stfinsecure[xxxx] > Sécurité + réseau > **Signature d'accès partagé**
->
-> **Ce qu'il faut montrer :** Le formulaire rempli — Blob uniquement coché, Lecture+Liste cochées, expiration visible (dans 1h), HTTPS uniquement sélectionné.
->
-> **Éléments obligatoires :** Services (Blob uniquement), permissions (Lecture + Liste), expiration courte, HTTPS.
-
----
-
-> 📸 **Capture 4c** — `screenshots/04c_sas_genere_url.png`
->
-> **Chemin portail :** Portail Azure > Signature d'accès partagé > **Résultats après génération**
->
-> **Ce qu'il faut montrer :** L'URL SAS générée — masquer les 20 derniers caractères du token (flou ou barre noire) pour la sécurité.
->
-> **Éléments obligatoires :** Début de l'URL visible (`https://stfinsecure...`), paramètres `sp=rl` et `se=` (date expiration) lisibles.
+<img width="917" height="431" alt="I1" src="https://github.com/user-attachments/assets/d51ed6d3-e155-4fae-9a0b-e3841f2cd248" />
+<img width="914" height="398" alt="I2" src="https://github.com/user-attachments/assets/f034cb31-1237-4597-acc7-489278b0ee17" />
 
 ---
 
@@ -827,7 +755,12 @@ Une Stored Access Policy permet de révoquer instantanément un SAS sans attendr
 | **Heure d'expiration** | Dans 30 jours |
 
 5. Cliquer **`OK`** puis **`Enregistrer`**
+----
+<img width="923" height="308" alt="I3" src="https://github.com/user-attachments/assets/9c608727-fd33-482a-aed9-cba7e6fe4c55" />
+<img width="923" height="301" alt="I4" src="https://github.com/user-attachments/assets/974a6cb2-cd07-4c7f-aa2a-1ba0ebf71df9" />
 
+
+-----
 ### 🔒 Risques de sécurité évités
 
 > 🔴 **Risque :** Générer un SAS avec toutes les permissions (`racwdl`)  un partenaire externe pourrait accidentellement ou malicieusement modifier ou supprimer des documents financiers.
@@ -873,6 +806,8 @@ az storage container policy create \
 3. Modifier manuellement `sp=rl` en `sp=w` dans l'URL et retenter — vous devriez obtenir une erreur **403 AuthorizationPermissionMismatch**
 
 **Résultat attendu :** L'accès en lecture fonctionne, l'accès en écriture est refusé.
+<img width="960" height="440" alt="J1" src="https://github.com/user-attachments/assets/70f70f4e-e92e-4c4b-b455-42884bfd78d2" />
+<img width="959" height="203" alt="J2" src="https://github.com/user-attachments/assets/071ba3fa-d4b6-4d4a-bbb5-1f2c6aa078d7" />
 
 ---
 
@@ -894,7 +829,6 @@ Activer la détection des menaces avancée sur le compte de stockage de FinSecur
 | **Détection données sensibles** | Identifie les PII (données personnelles) et données financières dans les blobs |
 | **Alertes de sécurité** | Générées dans Defender for Cloud et transmissibles par email ou vers un SIEM |
 
-> 💡 **Note abonnement étudiant :** La surveillance des activités de base est incluse à faible coût. L'analyse antivirus des malwares est facturée séparément (~$0.15/Go scanné) **désactiver cette option en lab** pour rester dans le budget étudiant.
 
 ### ⚙️ Procédure détaillée — Portail Azure
 
@@ -920,13 +854,9 @@ Activer la détection des menaces avancée sur le compte de stockage de FinSecur
 
 ---
 
-> 📸 **Capture 5a** — `screenshots/05a_defender_plan_stockage_active.png`
->
-> **Chemin portail :** Portail Azure > Microsoft Defender pour le cloud > Paramètres d'environnement > [Abonnement] > **Plans Defender**
->
-> **Ce qu'il faut montrer :** La ligne "Stockage" avec l'interrupteur en position **Activé** (vert).
->
-> **Éléments obligatoires :** Plan "Stockage" clairement visible, statut "Activé" en vert affiché.
+<img width="922" height="437" alt="K1" src="https://github.com/user-attachments/assets/2e2a7ac4-c0fc-4c05-97eb-ef7bc537e968" />
+<img width="913" height="410" alt="K2" src="https://github.com/user-attachments/assets/5eb72042-d692-42ff-9ea6-8ab8bfd1d0f7" />
+
 
 ---
 #### 5.3 — Vérifier la protection depuis le compte de stockage
@@ -939,13 +869,8 @@ Activer la détection des menaces avancée sur le compte de stockage de FinSecur
 
 ---
 
-> 📸 **Capture 5b** — `screenshots/05b_protection_stockage_active.png`
->
-> **Chemin portail :** Portail Azure > stfinsecure[xxxx] > **Microsoft Defender pour le cloud**
->
-> **Ce qu'il faut montrer :** Statut "Protégé" ou "Activé" depuis la vue du compte de stockage, éventuellement les recommandations de sécurité listées.
->
-> **Éléments obligatoires :** Statut de protection visible, nom du compte de stockage en contexte.
+<img width="885" height="403" alt="K3" src="https://github.com/user-attachments/assets/29dd93e6-efb1-4a37-99b7-f72330df83ec" />
+
 
 ---
 
@@ -1025,14 +950,7 @@ Mettre en place la journalisation complète de tous les accès au stockage (lect
 3. Cliquer sur **`Vérifier + créer`** → **`Créer`**
 
 ---
-
-> 📸 **Capture 6a** — `screenshots/06a_log_analytics_workspace_cree.png`
->
-> **Chemin portail :** Portail Azure > Espaces de travail Log Analytics > **law-storage-security > Vue d'ensemble**
->
-> **Ce qu'il faut montrer :** Le workspace créé avec son ID, sa région et son groupe de ressources.
->
-> **Éléments obligatoires :** Nom `law-storage-security`, région, groupe de ressources visibles.
+<img width="925" height="422" alt="L1" src="https://github.com/user-attachments/assets/92b364c1-5db6-4473-b9bb-1b425e3bdb02" />
 
 ---
 
@@ -1057,14 +975,7 @@ Mettre en place la journalisation complète de tous les accès au stockage (lect
 5. Cliquer sur **`Enregistrer`**
 
 ---
-
-> 📸 **Capture 6b** — `screenshots/06b_parametres_diagnostic_blob.png`
->
-> **Chemin portail :** Portail Azure > stfinsecure[xxxx] > Surveillance > Paramètres de diagnostic > blob > **Ajouter un paramètre de diagnostic**
->
-> **Ce qu'il faut montrer :** Les trois catégories (StorageRead, StorageWrite, StorageDelete) cochées, destination Log Analytics `law-storage-security` sélectionnée.
->
-> **Éléments obligatoires :** Les 3 catégories cochées, workspace `law-storage-security` visible comme destination.
+<img width="914" height="422" alt="L2" src="https://github.com/user-attachments/assets/10baf1d2-7c73-451c-91df-73b982292c87" />
 
 ---
 
@@ -1080,16 +991,10 @@ Mettre en place la journalisation complète de tous les accès au stockage (lect
 6. Confirmer en cliquant **`Oui`**
 
 ---
+<img width="914" height="421" alt="M1" src="https://github.com/user-attachments/assets/86cac28f-a564-40c0-b0e3-ac6415d0a8c0" />
+<img width="917" height="416" alt="M2" src="https://github.com/user-attachments/assets/9ab336ac-46b5-4362-96f1-2f0210705431" />
 
-> 📸 **Capture 6c** — `screenshots/06c_rotation_cle_confirmation.png`
->
-> **Chemin portail :** Portail Azure > stfinsecure[xxxx] > Sécurité + réseau > Clés d'accès > **Boîte de dialogue de rotation**
->
-> **Ce qu'il faut montrer :** La boîte de dialogue de confirmation de rotation de key1, avec le message d'avertissement visible.
->
-> **Éléments obligatoires :** Boîte de dialogue visible, mention de key1, message d'avertissement lisible.
 
----
 
 #### 6.4 — Requêtes KQL pour l'audit (Log Analytics)
 
@@ -1106,6 +1011,7 @@ StorageBlobLogs
 | summarize Nombre = count() by OperationName, StatusCode
 | sort by Nombre desc
 ```
+<img width="920" height="422" alt="N1" src="https://github.com/user-attachments/assets/30049067-f968-459c-8511-07760da0dccb" />
 
 ```kql
 // Requête 2 : Tentatives d'accès échouées (alertes critiques FinSecure SA)
@@ -1114,22 +1020,16 @@ StorageBlobLogs
 | summarize Tentatives = count() by CallerIpAddress, bin(TimeGenerated, 1h)
 | sort by Tentatives desc
 ```
+<img width="907" height="400" alt="N2" src="https://github.com/user-attachments/assets/800977bd-2508-473d-b3e8-ad28f934b742" />
 
 ```kql
 // Requête 3 : Suppressions de fichiers (audit réglementaire)
 StorageBlobLogs
 | where OperationName == "DeleteBlob"
-| project TimeGenerated, CallerIpAddress, AuthenticationType, ObjectKey
-| sort by TimeGenerated desc
-```
-
+|project TimeGenerated, CallerIpAddress, OperationName, ObjectKey
+|sort by TimeGenerated desc 
 ---
-
-> 📸 **Capture 6d** *(optionnelle)* — `screenshots/06d_requete_kql_resultats.png`
->
-> **Chemin portail :** Portail Azure > law-storage-security > Journaux > **Résultats d'une requête KQL**
->
-> **Ce qu'il faut montrer :** Les résultats d'une requête StorageBlobLogs avec des événements enregistrés.
+<img width="917" height="400" alt="N3" src="https://github.com/user-attachments/assets/d1285241-cc7e-4724-93ef-c4fbe48345c9" />
 
 ---
 
